@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.view-prosess-button {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  background: $prosess-button-color;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  padding: 11px 14px;
+  outline: none;
+
+  .title {
+    font-family: Lab Grotesque;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}

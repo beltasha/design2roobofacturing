@@ -1,0 +1,42 @@
+@import '../../styles/variables.scss';
+
+.search {
+  position: relative;
+  width: 286px;
+
+  .search-icon {
+    position: absolute;
+    top: 4px;
+    left: 9px;
+  }
+
+  .search-clear-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 9px;
+  }
+}
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid $border-color;
+  border-radius: 29px;
+  font-family: Lab Grotesque;
+  font-size: 14px;
+  opacity: 0.3;
+  line-height: 20px;
+  padding: 0 26px;
+
+  &:focus {
+    @extend .search-input-active;
+  }
+}
+
+.search-input-active {
+  border: 1px solid #2B7CEE;
+  border-radius: 16px;
+  opacity: 1;
+  outline: none;
+}

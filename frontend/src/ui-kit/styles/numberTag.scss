@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.number-tag {
+  display: inline-block;
+  height: 20px;
+  line-height: 15px;
+  background: $number-tag-color;
+  border-radius: 14px;
+
+  span {
+    line-height: 20px;
+    padding: 3px 6px;
+    color: #FFF;
+    font-family: Lab Grotesque;
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
