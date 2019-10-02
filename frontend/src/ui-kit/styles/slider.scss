@@ -1,7 +1,7 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 200px;
+  width: 193px;
   height: 32px;
 }
 
@@ -25,7 +25,6 @@
   background-color: #E1E5E6;
   border-radius: 21px;
   outline: none;
-  box-shadow: 0px 2px 4px rgba(55, 88, 123, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.06);
   
   .text {
     z-index: 9;
@@ -46,12 +45,12 @@
   position: absolute;
   content: "";
   height: 32px;
-  width: 100px;
+  width: 103px;
   left: 0;
   background-color: white;
   transition: .3s;
   border-radius: 21px;
-  
+  box-shadow: 0px 2px 4px rgba(55, 88, 123, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 input:checked + .slider:before {
