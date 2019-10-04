@@ -4,9 +4,9 @@ import '../styles/statusTag.scss';
 
 function getTagTitle(type) {
   switch(type) {
-    case 'review':
+    case 'IN_REVIEW':
       return 'In Review';
-    case 'finished':
+    case 'REVIEW_FINISHED':
       return 'Finished';
     default:
       return '';
@@ -15,7 +15,7 @@ function getTagTitle(type) {
 
 function getTagColor(type) {
   switch(type) {
-    case 'review':
+    case 'IN_REVIEW':
       return 'yellow';
     default:
       return 'white';
@@ -29,7 +29,7 @@ function StatusTag(props) {
 
   return (
     <div  className={`status-tag ${color}`}>
-      <span className="title">{title}</span>
+      <span className="status-tag-title">{title}</span>
     </div>
   )
 }

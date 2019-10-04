@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
-import AssemblyProsess from './assembly-prosess/AssembyProsess';
+import AssemblyProsess from './assembly-process/AssembyProcess';
 import './App.scss';
 
 function App() {

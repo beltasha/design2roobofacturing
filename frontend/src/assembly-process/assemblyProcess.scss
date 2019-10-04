@@ -1,0 +1,175 @@
+$header-background-color: #F4F5F6;
+
+.assembly-prosess {
+  .header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: $header-background-color;
+    padding: 0 24px;
+
+    .title {
+      margin-left: 10px;
+      font-family: Roobert;
+      font-size: 32px;
+      line-height: 24px;
+      color: rgba(63, 68, 72, 0.6);
+    }
+  }
+
+  main {
+    display: flex;
+  }
+
+  section {
+    margin: 24px 48px 0 80px;
+    display: flex;
+
+    &.filter {
+      width: 240px;
+    }
+
+    &.content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .content-header {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0 26px 0;
+    
+    .content-header-left {
+      display: flex;
+      align-items: flex-end;
+
+      .content-header-title {
+        font-family: Roobert;
+        font-size: 24px;
+        line-height: 24px;
+        white-space: nowrap;
+        margin-right: 8px;
+        font-weight: 900;
+      }
+    }
+
+    .content-header-right {
+      display: flex;
+      align-items: center;
+
+      .content-header-slider-title {
+        font-family: Lab Grotesque;
+        font-size: 14px;
+        line-height: 24px;
+        opacity: 0.5;
+        margin-left: 13px;
+      }
+
+      .content-header-slider {
+        margin: 0 13px;
+      }
+    }
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.assembly-process-card {
+  display: flex;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 4px rgba(54, 65, 76, 0.15);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  position: relative;
+
+  .status-tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  &:hover {
+    box-shadow: 0px 6px 12px rgba(54, 65, 76, 0.15);
+  }
+
+  img {
+    width: 160px;
+    height: 100px;
+    margin: 16px 40px 16px 32px;
+  }
+  .card-content {
+    display: flex;
+    flex:1;
+    justify-content: space-between;
+
+    &:hover .card-control-buttons {
+      display: flex;
+    }
+  }
+  .title {
+    font-family: Roobert;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 900;
+  }
+
+  .card-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    min-width: 350px;
+    font-family: Lab Grotesque;
+    font-size: 14px;
+    line-height: 10px;
+    padding-top: 14px;
+
+    .label {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .value {
+
+      &.positive {
+        color: #34C86E;
+      }
+  
+      &.negative {
+        color: #E91630;
+      }
+    }
+
+    .border-content {
+      flex: 1 1 auto;
+      border-bottom: 1px solid #BDC0C1;
+      margin: 0 5px;
+    }
+  }
+
+  .card-control-buttons {
+    display: none;
+    flex-direction: column;
+    padding: 16px 24px 24px;
+    justify-content: space-between;
+
+    .icons {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .icon {
+      padding: 0 0 16px 16px;
+      cursor: pointer;
+    }
+  }
+}

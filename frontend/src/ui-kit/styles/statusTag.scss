@@ -8,21 +8,20 @@
   box-sizing: border-box;
   border-radius: 3px;
 
-  .title {
+  .status-tag-title {
     font-family: Lab Grotesque;
     font-size: 11px;
     line-height: 13px;
     text-align: center;
     letter-spacing: 0.2px;
+    white-space: nowrap;
   }
 
   &.yellow {
-    width: 60px;
     background: $status-yellow;
   }
 
   &.white {
-    width: 57px;
     background: $status-white;
   }
 }

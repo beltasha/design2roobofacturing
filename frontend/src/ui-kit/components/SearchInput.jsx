@@ -6,6 +6,7 @@ import '../styles/searchInput.scss';
 
 function SearchInput(props) {
   const { value, update } = props;
+
   return (
     <div className="search">
       <Icon className="search-icon" icon={ICONS.SEARCH} height="17"/>
@@ -15,7 +16,11 @@ function SearchInput(props) {
         value={value} 
         onChange={(e) => { update(e.target.value) }}
       />
-      <Icon className="search-clear-icon" icon={ICONS.SEARCH_CLEAR} width="12"/>
+      <Icon 
+        className="search-clear-icon"
+        icon={ICONS.SEARCH_CLEAR} width="12"
+        clickOnIcon={() => { update('') }}
+      />
     </div>
   )
 }

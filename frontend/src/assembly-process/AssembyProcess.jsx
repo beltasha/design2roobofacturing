@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from 'react';
-// import Icon from '../ui-kit/components/Icon';
-// import { ICONS } from '../ui-kit/helpers/iconPaths';
 import AbbreviationIcon from '../ui-kit/components/AbbreviationIcon';
 import NumberTag from '../ui-kit/components/NumberTag';
 import Slider from '../ui-kit/components/Slider';
 import SearchInput from '../ui-kit/components/SearchInput';
+import AssemblyProcessCard from './AssemblyProcessCard';
 import api from './api';
 
-import './assemblyProsess.scss';
+import './assemblyProcess.scss';
 
 function AssemblyProsess() {
   const [isAscSort, setIsAscSort] = useState(false);
   const [searchString, setSearchString] = useState('');
+  const [assemblyProcesses, setAssemblyProcesses] = useState([]);
+
+  function handleScroll() {
+    const innerHeight = window.innerHeight + document.documentElement.scrollTop;
+    const documentHeight = document.documentElement.offsetHeight;
+    
+    if (documentHeight - innerHeight > 50) return;
+    console.log('Fetch more list items!');
+  }
 
   useEffect(() => {
     api.getAssemblyProsesses().then(({ data }) => {
-      console.log(data);
+      setAssemblyProcesses(data.slice(0, 30));
     });
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  function removeCardFromList(id) {
+    const newAssemblyProcesses = assemblyProcesses.filter(card => card._id !== id);
+    setAssemblyProcesses(newAssemblyProcesses);
+  }
 
   return (
     <div className="assembly-prosess">
@@ -48,6 +64,15 @@ function AssemblyProsess() {
               />
             </div>
           </header>
+          <div className="content-body">
+            {assemblyProcesses.map(assemblyProcess => 
+              <AssemblyProcessCard 
+                {...assemblyProcess}
+                key={assemblyProcess._id}
+                remove={(id) => removeCardFromList(id)}
+              />
+            )}
+          </div>
         </section>
       </main>
     </div>
