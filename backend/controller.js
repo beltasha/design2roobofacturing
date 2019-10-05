@@ -1,10 +1,10 @@
 const http = require('http');
 const url = require('url');
+var service = require('./service.js');
 
 module.exports = http.createServer((req, res) => {
-  var service = require('./service.js');
   const reqUrl = url.parse(req.url, true);
-
+  
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Request-Method', '*');

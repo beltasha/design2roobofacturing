@@ -5,30 +5,41 @@ import Slider from '../ui-kit/components/Slider';
 import SearchInput from '../ui-kit/components/SearchInput';
 import AssemblyProcessCard from './AssemblyProcessCard';
 import api from './api';
+import useInfiniteScroll from '../ui-kit/helpers/useInfiniteScroll';
+import _ from 'lodash';
 
 import './assemblyProcess.scss';
+
+const debouncedFetch = _.debounce((funcToBeCalledAfterDelay, params) => {
+  funcToBeCalledAfterDelay(params);
+}, 300);
 
 function AssemblyProsess() {
   const [isAscSort, setIsAscSort] = useState(false);
   const [searchString, setSearchString] = useState('');
   const [assemblyProcesses, setAssemblyProcesses] = useState([]);
+  const { isFetching, setIsFetching, setIsAllDataLoaded, setPage } = useInfiniteScroll(fetchMoreData);
+  
+  useEffect(() => {
+    fetchMoreData();
+  }, []);
 
-  function handleScroll() {
-    const innerHeight = window.innerHeight + document.documentElement.scrollTop;
-    const documentHeight = document.documentElement.offsetHeight;
-    
-    if (documentHeight - innerHeight > 50) return;
-    console.log('Fetch more list items!');
+  function updateSearch(search) {
+    setSearchString(search);
+    setAssemblyProcesses([]);
+    setPage(0);
+    debouncedFetch(fetchMoreData, { search });
   }
 
-  useEffect(() => {
-    api.getAssemblyProsesses().then(({ data }) => {
-      setAssemblyProcesses(data.slice(0, 30));
+  function fetchMoreData({page=0, size=20, search=searchString} = {}) {
+    api.getAssemblyProsesses({page, size, search}).then(({ data }) => {
+      setAssemblyProcesses(prevData => [...prevData, ...data]);
+      if (!data.length) {
+        setIsAllDataLoaded(true);
+      }
+      setIsFetching(false);
     });
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }
 
   function removeCardFromList(id) {
     const newAssemblyProcesses = assemblyProcesses.filter(card => card._id !== id);
@@ -60,7 +71,7 @@ function AssemblyProsess() {
               />
               <SearchInput
                 value={searchString} 
-                update = {(newValue) => setSearchString(newValue)}
+                update = {(newValue) => updateSearch(newValue)}
               />
             </div>
           </header>
@@ -72,6 +83,7 @@ function AssemblyProsess() {
                 remove={(id) => removeCardFromList(id)}
               />
             )}
+            {isFetching && 'Fetching more list items...'}
           </div>
         </section>
       </main>
