@@ -1,14 +1,22 @@
+export const REVIEW_STATUS = {
+  SIMULATION_POSITIVE: 'SIMULATION_POSITIVE',
+  SIMULATION_NEGATIVE: 'SIMULATION_NEGATIVE',
+  SIMULATION_REQUESTED: 'SIMULATION_REQUESTED',
+  SIMULATION_FINISHED: 'SIMULATION_FINISHED',
+  DRAFT: 'DRAFT',
+}
+
 export function reviewStatusToTitle(status) {
   switch(status) {
-    case 'SIMULATION_POSITIVE':
+    case REVIEW_STATUS.SIMULATION_POSITIVE:
       return 'Simulation positive';
-    case 'SIMULATION_NEGATIVE':
+    case REVIEW_STATUS.SIMULATION_NEGATIVE:
         return 'Simulation negative';
-    case 'SIMULATION_REQUESTED':
+    case REVIEW_STATUS.SIMULATION_REQUESTED:
       return 'Simulation requested';
-    case 'SIMULATION_FINISHED':
+    case REVIEW_STATUS.SIMULATION_FINISHED:
       return 'Simulation finished';
-    case 'DRAFT':
+    case REVIEW_STATUS.DRAFT:
       return 'Draft';
     default:
       return status;
@@ -17,9 +25,9 @@ export function reviewStatusToTitle(status) {
 
 export function reviewStatusToClass(status) {
   switch(status) {
-    case 'SIMULATION_POSITIVE':
+    case REVIEW_STATUS.SIMULATION_POSITIVE:
       return 'positive';
-    case 'SIMULATION_NEGATIVE':
+    case REVIEW_STATUS.SIMULATION_NEGATIVE:
         return 'negative';
     default:
       return '';

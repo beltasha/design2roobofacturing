@@ -6,13 +6,25 @@ exports.request = function (req, res) {
   const page = parseInt(reqUrl.query.page);
   const size = parseInt(reqUrl.query.size) || 20;
   const search= (reqUrl.query.search || '').trim().toLowerCase();
+  const { assembly, review, sort } = reqUrl.query;
 
   const offsetFrom = page * size;
   const offsetTo = offsetFrom + size;
+  
   const response = JSON
     .parse(fs.readFileSync('assembly-process.json', 'utf8'))
     .filter((item) => {
-      return !search || item.title.toLowerCase().includes(search)
+      const isFromSearchExist = search === 'null' || item.title.toLowerCase().includes(search);
+      const isFromAssemblyExist = assembly==='null' || item.assemblyStatus === assembly;
+      const isFromReviewExist = review === 'null' || item.reviewStatus === review;
+      return isFromSearchExist && isFromAssemblyExist && isFromReviewExist;
+    })
+    .sort((a, b) => {
+      const aDate =  new Date(a.updated.replace(/\s/g, ''));
+      const bDate =  new Date(b.updated.replace(/\s/g, ''));
+      return sort === 'ASC'
+        ? aDate-bDate
+        : bDate - aDate;
     })
     .slice(offsetFrom, offsetTo);
   

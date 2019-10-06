@@ -1,7 +1,7 @@
 $header-background-color: #F4F5F6;
 
 .assembly-prosess {
-  .header {
+  .assembly-prosess-header {
     height: 60px;
     display: flex;
     align-items: center;
@@ -22,23 +22,22 @@ $header-background-color: #F4F5F6;
   }
 
   section {
-    margin: 24px 48px 0 80px;
+    margin: 24px;
+  }
+
+  .assembly-process-content {
+    flex: 1;
     display: flex;
+    flex-direction: column;
+    margin-right: 170px;
+  }
 
-    &.filter {
-      width: 240px;
-    }
-
-    &.content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+  .assembly-process-filter {
+    margin-left: 80px;
   }
 
   .content-header {
     display: flex;
-    flex: 1;
     justify-content: space-between;
     align-items: center;
     padding: 18px 0 26px 0;

@@ -1,0 +1,51 @@
+.filter {
+  width: 240px;
+  background: #F4F5F6;
+  border: 1px solid #D6DADB;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 0 0 14px;
+}
+
+.filter-type-container {
+  margin-bottom: 11px;
+}
+
+.filter-title {
+  font-family: Roobert;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+}
+
+.filter-subtitle {
+  font-family: Lab Grotesque;
+  font-size: 11px;
+  line-height: 13px;
+  color: #98989D;
+  font-weight: normal;
+  margin: 14px 0 11px;
+}
+
+.filter-value {
+  margin: 0 0 8px 12px;
+  font-family: Lab Grotesque;
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+
+  &.selected {
+    color: #000;
+    margin-left: 0;
+
+    &:before {
+      content: "";
+      border-left: 1px solid #000;
+      content: "";
+      border-left: 1px solid #000;
+      margin-right: 12px;
+    }
+  }
+}

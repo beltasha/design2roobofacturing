@@ -6,6 +6,10 @@ import SearchInput from '../ui-kit/components/SearchInput';
 import AssemblyProcessCard from './AssemblyProcessCard';
 import api from './api';
 import useInfiniteScroll from '../ui-kit/helpers/useInfiniteScroll';
+import { REVIEW_STATUS, reviewStatusToTitle } from './helpers';
+import { STATUSES, getTagTitle } from '../ui-kit/helpers/statusTag';
+import Filter from '../ui-kit/components/Filter';
+
 import _ from 'lodash';
 
 import './assemblyProcess.scss';
@@ -14,25 +18,64 @@ const debouncedFetch = _.debounce((funcToBeCalledAfterDelay, params) => {
   funcToBeCalledAfterDelay(params);
 }, 300);
 
+const assemblyProcessFilterFields = {
+  'assembly': {
+    fieldTitle: 'Assembly',
+    values: Object.keys(STATUSES),
+    getValueTitle: getTagTitle,
+  },
+  'review': {
+    fieldTitle: 'Review',
+    values: Object.keys(REVIEW_STATUS),
+    getValueTitle: reviewStatusToTitle,
+  },
+}
+
 function AssemblyProsess() {
   const [isAscSort, setIsAscSort] = useState(false);
   const [searchString, setSearchString] = useState('');
   const [assemblyProcesses, setAssemblyProcesses] = useState([]);
-  const { isFetching, setIsFetching, setIsAllDataLoaded, setPage } = useInfiniteScroll(fetchMoreData);
-  
+  const [filter, setFilter] = useState({assembly: null, review: null});
+  const { isFetching, setIsFetching, setIsAllDataLoaded, page, setPage } = useInfiniteScroll(fetchMoreData);
+   
+
   useEffect(() => {
     fetchMoreData();
   }, []);
 
-  function updateSearch(search) {
-    setSearchString(search);
+  function resetData() {
     setAssemblyProcesses([]);
     setPage(0);
+  }
+
+  function updateSearch(search) {
+    setSearchString(search);
+    resetData();
     debouncedFetch(fetchMoreData, { search });
   }
 
-  function fetchMoreData({page=0, size=20, search=searchString} = {}) {
-    api.getAssemblyProsesses({page, size, search}).then(({ data }) => {
+  function updateFilter(filter) {
+    setFilter(filter);
+    resetData();
+    fetchMoreData(filter);
+  }
+
+  function updateSort(isAscSort) {
+    setIsAscSort(isAscSort);
+    resetData();
+    fetchMoreData({sort: isAscSort ? 'ASC' : 'DESC'});
+  }
+
+  function fetchMoreData(params = {}) {
+    const fetchParams = {
+      page,
+      sort: isAscSort ? 'ASC' : 'DESC',
+      size: 20,
+      search: searchString,
+      ...filter,
+      ...params,
+    }
+    api.getAssemblyProsesses(fetchParams).then(({ data }) => {
       setAssemblyProcesses(prevData => [...prevData, ...data]);
       if (!data.length) {
         setIsAllDataLoaded(true);
@@ -48,13 +91,19 @@ function AssemblyProsess() {
 
   return (
     <div className="assembly-prosess">
-      <header className="header">
+      <header className="assembly-prosess-header">
         <AbbreviationIcon />
         <span className="title">Design2Robofacturing</span>
       </header>
       <main>
-        <section className="filter">Фильтр</section>
-        <section className="content">
+        <section className="assembly-prosess-filter">
+          <Filter
+            filter={filter} 
+            fields={assemblyProcessFilterFields}
+            update={(newFilter) => updateFilter(newFilter)}
+          />
+        </section>
+        <section className="assembly-process-content">
           <header className="content-header">
             <div className="content-header-left">
               <span className="content-header-title">Assembly Prosesses</span>
@@ -67,7 +116,7 @@ function AssemblyProsess() {
                 leftText="Latest first" 
                 rightText="Old first" 
                 isChecked={isAscSort}
-                update = {() => { setIsAscSort(!isAscSort) }}
+                update = {() => { updateSort(!isAscSort) }}
               />
               <SearchInput
                 value={searchString} 
