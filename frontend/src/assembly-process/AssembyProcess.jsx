@@ -45,6 +45,7 @@ function AssemblyProsess() {
   }, []);
 
   function resetData() {
+    setIsFetching(true);
     setAssemblyProcesses([]);
     setPage(0);
   }

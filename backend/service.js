@@ -3,10 +3,9 @@ const fs = require('fs');
 
 exports.request = function (req, res) {
   const reqUrl = url.parse(req.url, true);
-  const page = parseInt(reqUrl.query.page);
+  const page = parseInt(reqUrl.query.page) || 0;
   const size = parseInt(reqUrl.query.size) || 20;
-  const search= (reqUrl.query.search || '').trim().toLowerCase();
-  const { assembly, review, sort } = reqUrl.query;
+  const { assembly, review, sort, search } = reqUrl.query;
 
   const offsetFrom = page * size;
   const offsetTo = offsetFrom + size;
@@ -14,9 +13,9 @@ exports.request = function (req, res) {
   const response = JSON
     .parse(fs.readFileSync('assembly-process.json', 'utf8'))
     .filter((item) => {
-      const isFromSearchExist = search === 'null' || item.title.toLowerCase().includes(search);
-      const isFromAssemblyExist = assembly==='null' || item.assemblyStatus === assembly;
-      const isFromReviewExist = review === 'null' || item.reviewStatus === review;
+      const isFromSearchExist = !search || item.title.toLowerCase().includes(search.trim().toLowerCase());
+      const isFromAssemblyExist = !assembly || item.assemblyStatus === assembly;
+      const isFromReviewExist = !review || item.reviewStatus === review;
       return isFromSearchExist && isFromAssemblyExist && isFromReviewExist;
     })
     .sort((a, b) => {
