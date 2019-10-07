@@ -7,36 +7,30 @@ const useInfiniteScroll = (callback, params = {}) => {
   const size = params.size || 20;
 
   useEffect(() => {
+    function handleScroll() {
+      if (isAllDataLoaded || isFetching) {
+        return;
+      }
+  
+      const innerHeight = Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) + window.innerHeight;
+  
+      const offsetHeight = document.documentElement.offsetHeight;
+  
+      if (offsetHeight - innerHeight < 20) {
+        setIsFetching(true);
+        callback({page:page + 1, size});
+        setPage(page + 1);
+      };
+    }
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!isFetching || isAllDataLoaded) {
-      return;
-    }
-
-    callback({page:page + 1, size});
-    setPage(page + 1);
-  }, [isFetching, isAllDataLoaded]);
-
-  function handleScroll() {
-    if (isAllDataLoaded || isFetching) {
-      return;
-    }
-
-    const innerHeight = Math.max(
-      window.pageYOffset,
-      document.documentElement.scrollTop,
-      document.body.scrollTop
-    ) + window.innerHeight;
-
-    const offsetHeight = document.documentElement.offsetHeight;
-
-    if (offsetHeight - innerHeight < 20) {
-      setIsFetching(true);
-    };
-  }
+  }, [isAllDataLoaded, isFetching, callback, page, size]);
+  
   return { isFetching, setIsFetching, setIsAllDataLoaded, page, setPage };
 };
 

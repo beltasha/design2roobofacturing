@@ -41,6 +41,7 @@ function AssemblyProsess() {
 
   useEffect(() => {
     fetchMoreData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function resetData() {
@@ -133,6 +134,7 @@ function AssemblyProsess() {
               />
             )}
             {isFetching && 'Fetching more list items...'}
+            {!isFetching && !assemblyProcesses.length && 'No data found'}
           </div>
         </section>
       </main>

@@ -2,7 +2,7 @@ export const REVIEW_STATUS = {
   SIMULATION_POSITIVE: 'SIMULATION_POSITIVE',
   SIMULATION_NEGATIVE: 'SIMULATION_NEGATIVE',
   SIMULATION_REQUESTED: 'SIMULATION_REQUESTED',
-  SIMULATION_FINISHED: 'SIMULATION_FINISHED',
+  SOLVED: 'SOLVED',
   DRAFT: 'DRAFT',
 }
 
@@ -14,7 +14,7 @@ export function reviewStatusToTitle(status) {
         return 'Simulation negative';
     case REVIEW_STATUS.SIMULATION_REQUESTED:
       return 'Simulation requested';
-    case REVIEW_STATUS.SIMULATION_FINISHED:
+    case REVIEW_STATUS.SOLVED:
       return 'Simulation finished';
     case REVIEW_STATUS.DRAFT:
       return 'Draft';
